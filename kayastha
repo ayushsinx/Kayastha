@@ -1,0 +1,9 @@
+export GITHUB_TOKEN='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'
+curl -fsSL https://downloads.cursor.com/origin/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+origin auth login
+origin repo clone nyx-dev/kayastha-aura
+cd kayastha-aura
+LOGIN=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/user | python3 -c 'import json,sys; print(json.load(sys.stdin)["login"])')
+curl -sS -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/user/repos -d '{"name":"kayastha-aura","private":true,"description":"Chitransh, a Kayastha matrimony house"}'
+git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${LOGIN}/kayastha-aura.git" main
